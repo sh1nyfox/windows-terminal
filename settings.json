@@ -1,9 +1,9 @@
 {
     "$schema": "https://aka.ms/terminal-profiles-schema",
-    "actions": 
+    "actions":
     [
         {
-            "command": 
+            "command":
             {
                 "action": "copy",
                 "singleLine": false
@@ -19,7 +19,7 @@
             "keys": "ctrl+shift+f"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "splitPane",
                 "split": "auto",
@@ -31,10 +31,15 @@
     "copyFormatting": "none",
     "copyOnSelect": false,
     "defaultProfile": "{2c4de342-38b7-51cf-b940-2309a097f518}",
-    "profiles": 
+    "profiles":
     {
-        "defaults": {},
-        "list": 
+        "defaults":
+			{
+				"useAcrylic": true,
+				"acrylicOpacity": 0.8
+			},
+
+        "list":
         [
             {
                 "commandline": "powershell.exe",
@@ -66,7 +71,7 @@
             {
                 "acrylicOpacity": 0.65000000000000002,
                 "colorScheme": "One Half Dark",
-                "font": 
+                "font":
                 {
                     "face": "FiraCode Nerd Font"
                 },
@@ -80,7 +85,7 @@
             }
         ]
     },
-    "schemes": 
+    "schemes":
     [
         {
             "background": "#0C0C0C",
@@ -288,7 +293,7 @@
             "selectionBackground": "#FFFFFF",
             "white": "#C0C0C0",
             "yellow": "#808000"
-        }
+        },
         {
             "name": "Dracula",
             "cursorColor": "#F8F8F2",
