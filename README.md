@@ -4,4 +4,4 @@ To use on your Windows Terminal copy the contents of [settings.json](https://git
 
 To use the neovim config, make sure you have the "nvim" folder inside ~/.config and paste the file there. 
 
-![image](https://github.com/sh1nyfox/windows-terminal/blob/master/windows-terminal.png)
+![image](https://github.com/sh1nyfox/windows-terminal/blob/master/windows-terminal-july-2025.png)
