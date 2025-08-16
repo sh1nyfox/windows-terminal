@@ -17,3 +17,7 @@ iwr -Uri "https://raw.githubusercontent.com/sh1nyfox/windows-terminal/refs/heads
 ```
 
 Note this is very much still a work in progress and only intended for my own personal settings preferences to be applied. But feel free to use parts to help your own configurations. 
+
+The script doesn't actually work properly at the moment (definitely a WIP) so don't use it. I'm still learning my way through all this stuff! 
+
+The individual configs work fine though when applied manually. 
