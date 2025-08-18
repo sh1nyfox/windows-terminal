@@ -96,31 +96,38 @@ winget install --id Starship.Starship -e
 Write-Host "--- Applying Configuration Files ---" -ForegroundColor Yellow
 
 try {
-    # Apply PowerShell profile
+    # --- Apply PowerShell Profile ---
     Write-Host "Applying PowerShell profile..."
-    # The $PROFILE variable automatically points to the correct path for the current PowerShell version.
+    # The $PROFILE variable automatically points to the correct path.
     $ProfileDirectory = Split-Path -Path $PROFILE -Parent
     if (-not (Test-Path -Path $ProfileDirectory)) {
+        Write-Host "Creating profile directory: $ProfileDirectory"
         New-Item -Path $ProfileDirectory -ItemType Directory -Force | Out-Null
     }
     Invoke-WebRequest -Uri $PowerShellProfileFileUrl -OutFile $PROFILE
     Write-Host "PowerShell profile applied." -ForegroundColor Green
 
-    # Apply Starship configuration
+    # --- Apply Starship Configuration ---
     Write-Host "Applying Starship configuration..."
     $StarshipConfigPath = Join-Path $HOME ".config"
     if (-not (Test-Path -Path $StarshipConfigPath)) {
+        Write-Host "Creating Starship config directory: $StarshipConfigPath"
         New-Item -Path $StarshipConfigPath -ItemType Directory -Force | Out-Null
     }
     Invoke-WebRequest -Uri $StarshipConfigFileUrl -OutFile (Join-Path $StarshipConfigPath "starship.toml")
     Write-Host "Starship configuration applied." -ForegroundColor Green
-    
-    # Apply Fastfetch configuration
+
+    # --- Apply Fastfetch Configuration ---
     Write-Host "Applying Fastfetch configuration..."
-    $FastfetchConfigPath = Join-Path $HOME ".config\fastfetch"
+    $FastfetchParentPath = Join-Path $HOME ".config"
+    $FastfetchConfigPath = Join-Path $FastfetchParentPath "fastfetch"
+    
+    # Use -Force to ensure the full path is created even if .config doesn't exist
     if (-not (Test-Path -Path $FastfetchConfigPath)) {
+        Write-Host "Creating Fastfetch config directory: $FastfetchConfigPath"
         New-Item -Path $FastfetchConfigPath -ItemType Directory -Force | Out-Null
     }
+    
     # The config file must be named 'config.jsonc' to support comments.
     Invoke-WebRequest -Uri $FastfetchConfigFileUrl -OutFile (Join-Path $FastfetchConfigPath "config.jsonc")
     Write-Host "Fastfetch configuration applied." -ForegroundColor Green
