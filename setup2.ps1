@@ -96,12 +96,6 @@ winget install --id Starship.Starship -e
 Write-Host "--- Applying Configuration Files ---" -ForegroundColor Yellow
 
 try {
-    # Apply Windows Terminal settings
-    Write-Host "Applying Windows Terminal settings..."
-    $TerminalSettingsPath = Join-Path $env:LOCALAPPDATA "Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
-    Invoke-WebRequest -Uri $WindowsTerminalSettingsFileUrl -OutFile $TerminalSettingsPath
-    Write-Host "Windows Terminal settings applied." -ForegroundColor Green
-
     # Apply PowerShell profile
     Write-Host "Applying PowerShell profile..."
     # The $PROFILE variable automatically points to the correct path for the current PowerShell version.
