@@ -77,16 +77,16 @@ if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
 }
 
 # Install PowerShell
-Invoke-CommandAndCheck "winget" "install --id Microsoft.PowerShell -e --accept-source-agreements"
+winget install --id Microsoft.PowerShell -e 
 
 # Install FiraCode Nerd Font for icons and glyphs in the terminal
-Invoke-CommandAndCheck "winget" "install --id FiraCode.FiraCodeNerdFont -e --accept-source-agreements"
+winget install --id FiraCode.FiraCodeNerdFont -e
 
 # Install Fastfetch for system information display
-Invoke-CommandAndCheck "winget" "install --id fastfetch-cli.fastfetch -e --accept-source-agreements"
+winget install --id fastfetch-cli.fastfetch -e
 
 # Install Starship for a custom shell prompt
-Invoke-CommandAndCheck "winget" "install --id Starship.Starship -e --accept-package-agreements --accept-source-agreements"
+winget install --id Starship.Starship -e
 
 
 # --- 2. Apply Configuration Files ---
