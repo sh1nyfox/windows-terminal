@@ -1,6 +1,3 @@
-# Load the PSReadLine module
-Import-Module PSReadLine
-
 # Set command history options for older PSReadLine versions
 Set-PSReadLineOption -HistorySavePath (Join-Path $env:APPDATA 'Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt')
 Set-PSReadLineOption -HistorySaveStyle SaveIncrementally
