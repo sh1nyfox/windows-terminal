@@ -1,3 +1,6 @@
+# Load the PSReadLine module
+Import-Module PSReadLine
+
 # Set command history options for older PSReadLine versions
 Set-PSReadLineOption -HistorySavePath (Join-Path $env:APPDATA 'Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt')
 Set-PSReadLineOption -HistorySaveStyle SaveIncrementally
@@ -10,12 +13,11 @@ Set-PSReadLineOption -PredictionViewStyle ListView
 
 Invoke-Expression (&starship init powershell)
 
-# Function to run fastfetch, but only after a specified cooldown period.
+
+Invoke-Expression (&starship init powershell)
+
+# Function to run fastfetch, but only once per hour
 function Invoke-FastfetchWithCooldown {
-    param(
-        # The cooldown period in hours. Defaults to 1 hour.
-        [double]$CooldownHours = 1.0
-    )
     # Define the path for the timestamp file in the user's temp directory
     $timestampFile = Join-Path $env:TEMP "fastfetch_last_run.txt"
 
@@ -29,8 +31,8 @@ function Invoke-FastfetchWithCooldown {
             $lastRunString = Get-Content $timestampFile
             $lastRunTime = [datetime]::Parse($lastRunString, $null, [System.Globalization.DateTimeStyles]::RoundtripKind)
 
-            # If the last run was within the cooldown period, don't run it again
-            if ((Get-Date) - $lastRunTime -lt [TimeSpan]::FromHours($CooldownHours)) {
+            # If the last run was less than an hour ago, don't run it again
+            if ((Get-Date) - $lastRunTime -lt [TimeSpan]::FromHours(1)) {
                 $shouldRun = $false
             }
         } catch {
@@ -49,8 +51,36 @@ function Invoke-FastfetchWithCooldown {
     }
 }
 
-# Run fastfetch with the default hourly cooldown.
-# To change the cooldown, pass the -CooldownHours parameter.
-# For example, to run it every 30 minutes (0.5 hours):
-# Invoke-FastfetchWithCooldown -CooldownHours 0.5
+# Run fastfetch with the hourly cooldown
 Invoke-FastfetchWithCooldown
+
+function wc {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory = $true, Position = 0, ValueFromRemainingArguments = $true)]
+        [string[]]$Path
+    )
+
+    foreach ($file in $Path) {
+        try {
+            # Resolve relative paths from the current directory
+            $resolved = Resolve-Path -LiteralPath $file -ErrorAction Stop
+
+            # -Raw reads as a single string (faster & accurate for Measure-Object -Word)
+            $wordCount = (Get-Content -LiteralPath $resolved -Raw | Measure-Object -Word).Words
+
+            if ($Path.Count -eq 1) {
+                # If one file, just output the number
+                $wordCount
+            }
+            else {
+                # If multiple, label each
+                "{0} : {1}" -f $resolved.Path, $wordCount
+            }
+        }
+        catch {
+            Write-Warning "File not found or unreadable: $file"
+        }
+    }
+}
+
